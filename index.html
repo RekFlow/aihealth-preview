@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>AI for Healthcare Operations</title>
+<meta name="description" content="Ten short audio episodes on putting AI to work, built for the people who keep a healthcare organization running.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================================
+   AI FOR HEALTHCARE OPERATIONS, series site
+   Everything is scoped to .dops so this block can be pasted straight into a
+   WordPress Custom HTML block without touching the rest of the page.
+   To rebrand: change the six colour values in .dops below.
+   To change episodes: edit the EPISODES list at the bottom of the file.
+   ========================================================================= */
+
+.dops, .dops *{margin:0;padding:0;border:0;box-sizing:border-box;font:inherit;
+  vertical-align:baseline;text-transform:none;letter-spacing:normal;background:none;}
+.dops div,.dops section,.dops header,.dops footer,.dops article,.dops nav{display:block;}
+
+.dops{
+  --cream:#FEF1E4;
+  --paper:#FCFAF7;
+  --ink:#1C0D0A;
+  --orange:#ea3c12;
+  --ink-60:rgba(28,13,10,.72);
+  --ink-38:rgba(28,13,10,.38);
+  --rule:rgba(28,13,10,.16);
+  --bar-h:74px;
+
+  font-family:"DM Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
+  font-size:16px;
+  line-height:1.5;
+  color:var(--ink);
+  background:var(--paper);
+  padding-bottom:calc(var(--bar-h) + 26px);
+  -webkit-font-smoothing:antialiased;
+}
+.dops .serif{font-family:"DM Serif Display",Georgia,serif !important;font-weight:400;}
+.dops a{color:inherit;text-decoration:none;}
+.dops button{cursor:pointer;background:none;}
+.dops :focus-visible{outline:2.5px solid var(--orange);outline-offset:3px;border-radius:4px;}
+.dops .wrap{max-width:1060px;margin:0 auto;padding:0 22px;}
+
+/* ---------- masthead ---------- */
+.dops .mast{border-bottom:2px solid var(--ink);}
+.dops .mast .wrap{display:flex;justify-content:space-between;align-items:baseline;
+  gap:18px;padding-top:18px;padding-bottom:12px;flex-wrap:wrap;}
+.dops .mark{font-family:"DM Serif Display",Georgia,serif;font-size:19px;}
+.dops .mast .meta{font-size:12.5px;color:var(--ink-60);}
+
+/* ---------- hero ---------- */
+.dops .hero{padding:38px 0 34px;border-bottom:1px solid var(--rule);}
+.dops .hero h1{font-family:"DM Serif Display",Georgia,serif;font-weight:400;
+  font-size:clamp(38px,7.4vw,68px);line-height:1.02;letter-spacing:-.02em;max-width:11em;}
+.dops .hero .lede{font-size:17px;line-height:1.55;color:var(--ink-60);
+  max-width:40em;margin-top:16px;}
+
+.dops .start{display:flex;align-items:center;gap:16px;margin-top:26px;
+  background:var(--ink);color:var(--cream);padding:14px 20px 14px 14px;
+  width:fit-content;max-width:100%;}
+.dops .start:hover .startbtn{background:var(--cream);color:var(--ink);}
+.dops .startbtn{width:50px;height:50px;border-radius:50%;background:var(--orange);
+  color:var(--cream);display:grid;place-items:center;flex:none;transition:background .18s,color .18s;}
+.dops .startbtn svg{width:19px;height:19px;fill:currentColor;margin-left:2px;}
+.dops .start .t{min-width:0;}
+.dops .start .t b{display:block;font-family:"DM Serif Display",Georgia,serif;
+  font-size:19px;line-height:1.2;font-weight:400;}
+.dops .start .t span{display:block;font-size:12.5px;color:rgba(254,241,228,.68);margin-top:3px;}
+
+.dops .facts{display:flex;gap:30px;flex-wrap:wrap;margin-top:30px;}
+.dops .fact b{font-family:"DM Serif Display",Georgia,serif;font-size:27px;display:block;line-height:1;}
+.dops .fact span{font-size:12.5px;color:var(--ink-60);display:block;margin-top:4px;}
+
+/* ---------- stage sections ---------- */
+.dops .stage{padding:34px 0 6px;}
+.dops .stage .head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+  border-bottom:1.5px solid var(--ink);padding-bottom:10px;margin-bottom:22px;}
+.dops .stage h2{font-family:"DM Serif Display",Georgia,serif;font-size:27px;line-height:1;}
+.dops .stage .sub{font-size:13.5px;color:var(--ink-60);}
+.dops .stage .count{margin-left:auto;font-size:12.5px;color:var(--ink-38);}
+
+.dops .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px 24px;}
+
+/* ---------- episode card ---------- */
+.dops .card{display:grid;grid-template-columns:104px 1fr;gap:16px;align-items:start;
+  padding-bottom:20px;border-bottom:1px solid var(--rule);}
+.dops .art{position:relative;width:104px;height:104px;flex:none;overflow:hidden;}
+.dops .art svg{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.dops .art .num{position:absolute;left:10px;top:4px;font-family:"DM Serif Display",Georgia,serif;
+  font-size:34px;line-height:1;}
+.dops .art .ph{position:absolute;left:10px;right:10px;bottom:9px;font-size:11.5px;
+  line-height:1.3;font-weight:500;}
+.dops .art .cover{position:absolute;inset:0;display:grid;place-items:center;
+  background:rgba(28,13,10,.52);opacity:0;transition:opacity .16s;}
+.dops .card:hover .cover,.dops .card.is-current .cover{opacity:1;}
+.dops .art .cover svg{position:static;width:17px;height:17px;fill:var(--cream);margin-left:2px;}
+.dops .playhit{position:absolute;inset:0;width:100%;height:100%;}
+
+.dops .card h3{font-family:"DM Serif Display",Georgia,serif;font-size:20px;line-height:1.15;}
+.dops .card .one{font-size:13.5px;line-height:1.5;color:var(--ink-60);margin-top:5px;}
+.dops .card .row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:11px;
+  font-size:12.5px;color:var(--ink-38);}
+.dops .card .comp{color:var(--ink);border-bottom:1px solid var(--orange);padding-bottom:1px;}
+.dops .card.is-current h3{color:var(--orange);}
+.dops .pending{color:var(--ink-38);}
+
+/* equaliser, only while that episode is playing */
+.dops .eq{display:none;gap:2px;align-items:flex-end;height:12px;}
+.dops .card.is-playing .eq{display:flex;}
+.dops .eq i{width:2.5px;background:var(--orange);height:4px;animation:dops-eq .9s ease-in-out infinite;}
+.dops .eq i:nth-child(2){animation-delay:.18s;}
+.dops .eq i:nth-child(3){animation-delay:.36s;}
+@keyframes dops-eq{0%,100%{height:3px}50%{height:12px}}
+
+/* ---------- transcripts ---------- */
+.dops .txbtn{color:var(--ink);border-bottom:1px solid var(--rule);padding-bottom:1px;
+  font-family:inherit;font-size:12.5px;line-height:1.4;}
+.dops .txbtn:hover{border-bottom-color:var(--orange);}
+.dops .tx{display:none;margin-top:13px;padding:13px 15px;background:var(--cream);
+  font-size:13.5px;line-height:1.62;color:var(--ink);max-height:330px;overflow-y:auto;}
+.dops .tx p{margin-bottom:11px;}
+.dops .tx p:last-child{margin-bottom:0;}
+.dops .card.reading .tx{display:block;}
+@media print{ .dops .tx{display:block !important;max-height:none;overflow:visible;} }
+
+/* ---------- now playing bar ---------- */
+.dops-bar{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--ink,#1C0D0A);
+  color:#FEF1E4;transform:translateY(110%);transition:transform .26s ease;
+  font-family:"DM Sans",-apple-system,sans-serif;}
+.dops-bar.up{transform:translateY(0);}
+.dops-bar .in{max-width:1060px;margin:0 auto;padding:11px 18px;
+  display:flex;align-items:center;gap:14px;}
+.dops-bar .bart{width:46px;height:46px;flex:none;position:relative;overflow:hidden;}
+.dops-bar .bart svg{position:absolute;inset:0;width:100%;height:100%;}
+.dops-bar .bart b{position:absolute;left:5px;top:0;font-family:"DM Serif Display",Georgia,serif;
+  font-size:19px;font-weight:400;}
+.dops-bar .txt{flex:1;min-width:0;}
+.dops-bar .txt b{display:block;font-family:"DM Serif Display",Georgia,serif;font-weight:400;
+  font-size:15.5px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dops-bar .txt span{display:block;font-size:11.5px;color:rgba(254,241,228,.6);margin-top:2px;}
+.dops-bar button{background:none;border:0;padding:0;margin:0;font:inherit;cursor:pointer;-webkit-appearance:none;appearance:none;}
+.dops-bar .ctl{display:flex;align-items:center;gap:6px;flex:none;}
+.dops-bar .ctl button{color:#FEF1E4;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;}
+.dops-bar .ctl button svg{width:16px;height:16px;fill:currentColor;stroke:currentColor;}
+.dops-bar .ctl .main{background:#ea3c12;width:44px;height:44px;}
+.dops-bar .ctl .main svg{width:17px;height:17px;margin-left:1px;}
+.dops-bar .ctl button:disabled{opacity:.32;cursor:default;}
+.dops-bar .close{width:32px;height:32px;flex:none;color:rgba(254,241,228,.55);
+  display:grid;place-items:center;border-radius:50%;}
+.dops-bar .close:hover{color:#FEF1E4;background:rgba(254,241,228,.12);}
+.dops-bar .close svg{width:14px;height:14px;stroke:currentColor;stroke-width:2.2;
+  stroke-linecap:round;fill:none;}
+.dops-bar .seek{display:flex;align-items:center;gap:10px;
+  max-width:1060px;margin:0 auto;padding:0 18px 11px;}
+.dops-bar .seek time{font-size:11px;color:rgba(254,241,228,.6);
+  font-variant-numeric:tabular-nums;width:34px;flex:none;}
+.dops-bar .seek time:last-child{text-align:right;}
+.dops-bar input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:4px;
+  background:rgba(254,241,228,.22);border-radius:2px;cursor:pointer;}
+.dops-bar input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;
+  border-radius:50%;background:#FEF1E4;}
+.dops-bar input[type=range]::-moz-range-thumb{width:12px;height:12px;border:0;border-radius:50%;background:#FEF1E4;}
+.dops-bar .note{background:#ea3c12;color:#FEF1E4;font-size:12.5px;padding:7px 18px;text-align:center;display:none;}
+.dops-bar.err .note{display:block;}
+.dops-bar.err .seek{opacity:.35;pointer-events:none;}
+
+/* ---------- stage recap ---------- */
+.dops .cap{display:grid;grid-template-columns:1fr 1.15fr;gap:26px;align-items:center;
+  margin:26px 0 8px;padding:22px;background:var(--cream);}
+.dops .cap .tag{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);}
+.dops .cap h3{font-family:"DM Serif Display",Georgia,serif;font-size:25px;line-height:1.1;margin-top:8px;}
+.dops .cap .meta p:last-child{font-size:14px;line-height:1.55;color:var(--ink-60);margin-top:8px;}
+.dops .cap .frame{position:relative;aspect-ratio:16/9;background:var(--ink);overflow:hidden;}
+.dops .cap video{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.dops .cap .miss{position:absolute;inset:0;display:none;place-items:center;text-align:center;
+  font-size:13.5px;line-height:1.6;color:rgba(254,241,228,.75);padding:16px;}
+.dops .cap.none video{display:none;}
+.dops .cap.none .miss{display:grid;}
+
+/* ---------- footer ---------- */
+.dops footer{border-top:1.5px solid var(--ink);margin-top:34px;}
+.dops footer .wrap{padding-top:16px;padding-bottom:26px;font-size:12.5px;color:var(--ink-60);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+
+@media (max-width:820px){
+  .dops .grid{grid-template-columns:1fr;gap:18px;}
+  .dops .cap{grid-template-columns:1fr;gap:16px;padding:18px;}
+  .dops .hero{padding:28px 0 26px;}
+  .dops .card{grid-template-columns:88px 1fr;gap:14px;}
+  .dops .art{width:88px;height:88px;}
+  .dops .art .num{font-size:28px;}
+  .dops-bar .seek time:first-child{display:none;}
+}
+@media (prefers-reduced-motion:reduce){
+  .dops *,.dops-bar{transition:none !important;animation:none !important;}
+  .dops .eq i{height:8px;}
+}
+</style>
+</head>
+<body style="margin:0;background:#FCFAF7;">
+
+<div class="dops">
+
+  <header class="mast">
+    <div class="wrap">
+      <p class="mark">AI for Healthcare Operations</p>
+      <p class="meta">Preview &middot; three of ten episodes</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+
+    <section class="hero">
+      <h1>AI for healthcare operations.</h1>
+      <p class="lede">Short audio episodes for patient access, scheduling, billing, medical records, facilities, environmental services, and supply chain. Mindset first, tools second. Listen on the drive in, use it that afternoon.</p>
+
+      <button class="start" id="dopsStart">
+        <span class="startbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="t"><b>Start with Episode 1</b><span>Your First Eureka Moment, 3:27</span></span>
+      </button>
+
+      <div class="facts">
+        <div class="fact"><b>10</b><span>Episodes</span></div>
+        <div class="fact"><b>10</b><span>One-page companions</span></div>
+        <div class="fact"><b>3</b><span>Playable in this preview</span></div>
+      </div>
+    </section>
+
+    <section class="stage">
+      <div class="head">
+        <h2>The Spark</h2>
+        <p class="sub">New to curious. The foundation.</p>
+        <p class="count">5 episodes</p>
+      </div>
+      <div class="grid" id="dopsSpark"></div>
+      <div class="cap none" id="cap-spark">
+        <div class="meta">
+          <p class="tag">Stage recap &middot; The Spark</p>
+          <h3>You are not where you started.</h3>
+          <p>The whole foundation in one piece. Role, context and output, where the lines sit, going deep instead of wide, the workspace, and making it sound like you. Best once you have finished the first five.</p>
+        </div>
+        <div class="vid"><div class="frame">
+          <video preload="none" playsinline></video>
+          <p class="miss">Stage recap video<br>Included with the full license.</p>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="stage">
+      <div class="head">
+        <h2>The Click</h2>
+        <p class="sub">Curious to capable. It lands in the actual job.</p>
+        <p class="count">5 episodes</p>
+      </div>
+      <div class="grid" id="dopsClick"></div>
+      <div class="cap none" id="cap-click">
+        <div class="meta">
+          <p class="tag">Stage recap &middot; The Click</p>
+          <h3>This is yours now.</h3>
+          <p>The same recipe pointed at the work itself. The hard message, the field, the desk, the knowledge that lives in one person's head, and catching it when it gets something wrong.</p>
+        </div>
+        <div class="vid"><div class="frame">
+          <video preload="none" playsinline></video>
+          <p class="miss">Stage recap video<br>Included with the full license.</p>
+        </div></div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <p>Preview build. Three of ten episodes.</p>
+      <p>Licensed for internal use</p>
+    </div>
+  </footer>
+
+</div>
+
+<div id="dopsTx" hidden>
+<div data-ep="1"><p>Welcome to AI for Healthcare Operations. I&#x27;m Eureka, and over the next few episodes I&#x27;m going to change the way you think about AI. Not the way you use it. The way you think about it. Because that&#x27;s where everything starts.</p><p>Let me ask you something. The first time you tried one of these AI tools, what did you do? If you&#x27;re like most people, you typed in a question. Got an answer. Maybe it was okay, maybe it was junk, and you thought, eh. Not for me.</p><p>Here&#x27;s the problem. You treated it like Google. You walked up to the most capable thinking partner you have ever had access to, and you asked it for directions. That&#x27;s the mistake. And once you see it, you can&#x27;t unsee it.</p><p>AI is not a search engine. It&#x27;s a thought partner. A search engine gives you links. A thought partner thinks with you. But here&#x27;s the catch. It can only think as well as you set it up to.</p><p>So let me give you the one framework that changes everything. Role, Context, Output.</p><p>Three things, every time. Role. Tell it who to be. You&#x27;re an experienced practice manager. You&#x27;re a billing specialist. You&#x27;re a facilities supervisor. Context. Tell it what it needs to know. The situation, the background, the constraints. Output. Tell it what you want back. A summary? A draft email? A list of options?</p><p>Watch the difference. Write me a memo gets you generic mush. But this. You&#x27;re a clinic operations manager. I need to tell my front desk team we&#x27;re changing our check-in process next month, and some of them have done it the old way for fifteen years. Write me a short, warm memo that respects that.</p><p>Now you&#x27;re getting something you can actually use. Same tool. Completely different result. The difference was you.</p><p>Now here&#x27;s a trick for when you don&#x27;t even know what to tell it. Just say, ask me five questions before you answer. Let it interview you. Most people try to write the perfect prompt. Stop. Let the AI pull it out of you. It is better at knowing what it needs than you are.</p><p>And one more, because this is the one that turns AI from an agreeable assistant into something valuable. Add this. Challenge my thinking. By default these tools agree with you. They&#x27;re people pleasers. But when you say push back on this, tell me where I&#x27;m wrong, now you&#x27;ve got an advisor instead of a cheerleader.</p><p>Last thing. Stop typing. Use the microphone. Talk to it the way you&#x27;d talk to a sharp colleague in the passenger seat. Same rules apply. Role, context, output. You&#x27;re just saying it out loud. For those of us who think better out loud anyway, this changes everything.</p><p>So here&#x27;s your challenge. One real thing this week. Something on your plate right now. Open up the tool and instead of asking a question, give it a role, give it context, tell it what you want. Then say, ask me five questions first.</p><p>That&#x27;s your first eureka moment. The shift from asking, to thinking together.</p><p>Everything we do from here builds on it. I&#x27;ll see you in the next one.</p></div>
+<div data-ep="2"><p>Welcome back. I&#x27;m Eureka.</p><p>Last time we talked about AI as a thought partner. Today I want to deal with the thing that&#x27;s probably sitting in the back of your mind.</p><p>Am I even supposed to be using this?</p><p>It&#x27;s a fair question, and almost nobody answers it out loud. So people do one of two things. Either they avoid AI entirely because they&#x27;re afraid of getting in trouble. Or they use whatever they found on their phone without ever checking. Both of those are bad, and they come from the same place. Nobody told you where the lines are.</p><p>So let&#x27;s fix that. Three things to know.</p><p>First. Your organization almost certainly has approved tools. Somebody in technology went through a review process, looked at where the data goes, checked the privacy terms, and put a short list in front of you. That list is not a restriction. It&#x27;s a green light. Inside that list, you&#x27;re covered.</p><p>And here&#x27;s the part people miss. An approved tool and the free version of the same tool are not the same thing. The approved one usually has an agreement behind it saying your information doesn&#x27;t get used to train somebody else&#x27;s model. The free one you signed up for with your personal email does not. Same name on the box. Completely different terms.</p><p>Second. There is a short list of things that never go into a chat box. Patient names and anything from a chart. Dates, room numbers, or details that could point to one patient. Employee records and discipline files. Anything you&#x27;d hesitate to read out loud in a public meeting. If you wouldn&#x27;t email it to a stranger, don&#x27;t paste it into an AI tool.</p><p>And here&#x27;s the good news, because this trips people up. Most of your work does not involve any of that. Drafting a memo about a schedule change. Comparing two vendor quotes. Turning your notes into a clean procedure. Rewriting a message so it lands better. None of that touches protected information at all.</p><p>Third, and this is the one that matters most. You are responsible for what you send. Not the tool. If AI drafts something and you forward it with your name on it, that&#x27;s your work now. Read it. Check it. Fix what&#x27;s wrong. The tool is an assistant, not a signature.</p><p>Think of it exactly like a capable new employee. You&#x27;d let them draft something. You would not let them send it to the CEO without reading it first. Same standard.</p><p>Now, if you don&#x27;t know what your organization allows, that&#x27;s not a dead end. That&#x27;s one email. Ask your supervisor or your technology department two questions. Which AI tools are approved for staff use, and is there written guidance I should read. That&#x27;s it. People ask that question every day and nobody gets in trouble for asking it.</p><p>And if the answer is that a policy is still being written, you are not behind. Plenty of organizations are still writing theirs.</p><p>So here&#x27;s your challenge. Find out. Two questions, one email, this week. Or check wherever your organization keeps its approved software list.</p><p>Because here&#x27;s your eureka moment. The rules are not the thing standing between you and using this well. Not knowing the rules is. And that takes about five minutes to fix.</p><p>Next time, I&#x27;ll show you why chasing new AI tools is usually the wrong move, and what to do instead. See you there.</p></div>
+<div data-ep="3"><p>Welcome back. I&#x27;m Eureka.</p><p>Today I want to save you some time, some money, and a lot of frustration with one idea. Go deep, not wide.</p><p>Here&#x27;s what happens to a lot of people. They get excited about AI and they start collecting tools. They see one on social media that writes emails. Another that makes presentations. Another that summarizes documents. Pretty soon they&#x27;ve got eight different apps, they&#x27;re paying for half of them, and they&#x27;re not actually good at any of them.</p><p>Let me let you in on a secret the AI world does not advertise. Most of those flashy tools are not new AI. They&#x27;re a wrapper. A nice looking package built on top of one of the same handful of big models underneath. Same engine. Somebody just put a new paint job on it and charged you for it.</p><p>Think about it like your tool belt. If you&#x27;ve got a good set of tools and you actually know how to use them, you don&#x27;t need to run out and buy a specialty gadget for every single task. Most of those gadgets are doing what your good tools already do. You just hadn&#x27;t learned the full range of what you had.</p><p>So before you ever pay for a new AI tool, ask one question. What does this do that my main tool can&#x27;t already do? If the answer is nothing really, it just looks easier, save your money. Go learn your main tool better instead.</p><p>This matters even more at work, because your tools are already chosen and already approved. You don&#x27;t need to go shopping. There are years of capability in the two or three tools on your organization&#x27;s list that almost nobody ever touches. The win is not finding a new tool. The win is going deep on the ones you&#x27;ve got.</p><p>And there&#x27;s a second reason, beyond the money. Fluency compounds. Every hour you spend in one tool makes the next task faster in that same tool. You start to know how it thinks, where it&#x27;s strong, where it gets lazy. Tool hopping resets you to zero every time.</p><p>The people who get real value out of AI are not the ones with the most apps. They&#x27;re the ones who picked one, learned it cold, and made it part of how they work. Depth beats novelty every single time.</p><p>So here&#x27;s your challenge. Pick one tool. Just one. And this week, instead of trying something new, go deeper on the one you&#x27;ve got. Find one feature you didn&#x27;t know was there. Push it on something messy and real, not just the easy stuff. That&#x27;s where fluency actually gets built.</p><p>That&#x27;s your eureka moment. You probably don&#x27;t need a better tool. You need a better grip on the one already in your hand.</p><p>Next time, I&#x27;ll show you how to stop starting from scratch every single time you open it. See you there.</p></div>
+</div>
+
+<div class="dops-bar" id="dopsBar" role="region" aria-label="Now playing">
+  <p class="note" id="dopsNote">This episode has not been recorded yet.</p>
+  <div class="in">
+    <div class="bart" id="dopsArt"></div>
+    <div class="txt">
+      <b id="dopsTitle">&nbsp;</b>
+      <span id="dopsStage">&nbsp;</span>
+    </div>
+    <div class="ctl">
+      <button id="dopsBack" title="Back 15 seconds" aria-label="Back 15 seconds">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9l5 4"/><path d="M6 9h7a5 5 0 1 1 0 10H9"/></svg>
+      </button>
+      <button class="main" id="dopsPlay" aria-label="Play">
+        <svg id="dopsIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <button id="dopsNext" title="Next episode" aria-label="Next episode">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14l9-7z"/><path d="M17 5h2v14h-2z"/></svg>
+      </button>
+    </div>
+      <button class="close" id="dopsClose" title="Close player" aria-label="Close player">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+  </div>
+  <div class="seek">
+    <time id="dopsNow">0:00</time>
+    <input type="range" id="dopsSeek" min="0" max="1000" value="0" step="1" aria-label="Seek">
+    <time id="dopsLen">0:00</time>
+  </div>
+</div>
+
+<script>
+(function(){
+  /* ======================================================================
+     EPISODE LIST. Generated by core/site/build_preview.py from the sector sheet.
+     ready:false shows the episode as not yet recorded and disables play.
+     ====================================================================== */
+  var EPISODES = [
+    {
+      "n": 1,
+      "stage": "The Spark",
+      "title": "Your First Eureka Moment",
+      "line": "AI is a thought partner, not a search engine. Role, context, output.",
+      "phrase": "Ask it better",
+      "mins": "3:27",
+      "audio": "audio/01-your-first-eureka-moment.mp3",
+      "companion": "companions/companion-ep-01.pdf",
+      "ready": true
+    },
+    {
+      "n": 2,
+      "stage": "The Spark",
+      "title": "What You're Actually Allowed To Do",
+      "line": "Approved tools, what never goes in a chat box, and who owns what gets sent.",
+      "phrase": "Know the lines",
+      "mins": "3:40",
+      "audio": "audio/02-what-you-re-actually-allowed-to-do.mp3",
+      "companion": "companions/companion-ep-02.pdf",
+      "ready": true
+    },
+    {
+      "n": 3,
+      "stage": "The Spark",
+      "title": "Go Deep, Not Wide",
+      "line": "Most new tools are packaging. Learn the one already in your hand.",
+      "phrase": "One tool, cold",
+      "mins": "2:58",
+      "audio": "audio/03-go-deep-not-wide.mp3",
+      "companion": "companions/companion-ep-03.pdf",
+      "ready": true
+    },
+    {
+      "n": 4,
+      "stage": "The Spark",
+      "title": "Build Your Workspace",
+      "line": "Stop starting from zero, and switch the knowledge on.",
+      "phrase": "Build it once",
+      "mins": "",
+      "audio": "",
+      "companion": "",
+      "ready": false
+    },
+    {
+      "n": 5,
+      "stage": "The Spark",
+      "title": "Make It Sound Like You",
+      "line": "Set your voice once. Reuse it everywhere.",
+      "phrase": "Sound like you",
+      "mins": "",
+      "audio": "",
+      "companion": "",
+      "ready": false
+    },
+    {
+      "n": 6,
+      "stage": "The Click",
+      "title": "The Message You've Been Putting Off",
+      "line": "The hard email, the upset family member, the bad news.",
+      "phrase": "Send it well",
+      "mins": "",
+      "audio": "",
+      "companion": "",
+      "ready": false
+    },
+    {
+      "n": 7,
+      "stage": "The Click",
+      "title": "If You're On Your Feet All Day",
+      "line": "Facilities, environmental services, supply chain, food and nutrition, transport.",
+      "phrase": "On the move",
+      "mins": "",
+      "audio": "",
+      "companion": "",
+      "ready": false
+    },
+    {
+      "n": 8,
+      "stage": "The Click",
+      "title": "If You Work at a Desk",
+      "line": "Patient access, billing, coding, medical records, technology support.",
+      "phrase": "At the desk",
+      "mins": "",
+      "audio": "",
+      "companion": "",
+      "ready": false
+    },
+    {
+      "n": 9,
+      "stage": "The Click",
+      "title": "Before It Walks Out The Door",
+      "line": "Capturing what only one person knows how to do.",
+      "phrase": "Keep the know-how",
+      "mins": "",
+      "audio": "",
+      "companion": "",
+      "ready": false
+    },
+    {
+      "n": 10,
+      "stage": "The Click",
+      "title": "When It Gets It Wrong",
+      "line": "How to spot it, and how to fix the conversation.",
+      "phrase": "You're the check",
+      "mins": "",
+      "audio": "",
+      "companion": "",
+      "ready": false
+    }
+  ];
+
+  /* three artwork schemes, rotating, so the wall reads as one set */
+  var SCHEMES = [
+    {bg:"#1C0D0A", fg:"#FEF1E4", arc:"#ea3c12"},
+    {bg:"#ea3c12", fg:"#FEF1E4", arc:"#1C0D0A"},
+    {bg:"#FEF1E4", fg:"#1C0D0A", arc:"#ea3c12"}
+  ];
+  function scheme(ep){ return SCHEMES[(ep.n - 1) % 3]; }
+
+  /* broadcast arcs, bottom right, cheap and on subject */
+  function artSVG(ep, plain){
+    var s = scheme(ep), a = "";
+    [20,34,48,62].forEach(function(r, i){
+      a += '<path d="M100 '+(100-r)+' A '+r+' '+r+' 0 0 0 '+(100-r)+' 100" fill="none" stroke="'+s.arc+
+           '" stroke-width="'+(plain?3:2.4)+'" opacity="'+(0.95 - i*0.17).toFixed(2)+'"/>';
+    });
+    return '<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">'+
+           '<rect width="100" height="100" fill="'+s.bg+'"/>'+a+'</svg>';
+  }
+
+  var spark = document.getElementById("dopsSpark");
+  var click = document.getElementById("dopsClick");
+  var cards = [];
+
+  EPISODES.forEach(function(ep, i){
+    var s = scheme(ep);
+    var el = document.createElement("article");
+    el.className = "card";
+    el.innerHTML =
+      '<div class="art" style="color:'+s.fg+'">'+ artSVG(ep) +
+        '<span class="num">'+ep.n+'</span>'+
+        '<span class="ph">'+ep.phrase+'</span>'+
+        (ep.ready ? '<span class="cover"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>'+
+                    '<button class="playhit" aria-label="Play episode '+ep.n+', '+ep.title+'"></button>' : '')+
+      '</div>'+
+      '<div><h3>'+ep.title+'</h3><p class="one">'+ep.line+'</p>'+
+        '<div class="row">'+
+          '<span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>'+
+          (ep.ready ? '<span>'+ep.mins+'</span>' : '<span class="pending">Included with the full license</span>')+
+          (ep.companion ? '<a class="comp" href="'+ep.companion+'" target="_blank" rel="noopener">Open the companion</a>' : '')+
+        '</div>'+
+      '</div>';
+      var tx = document.querySelector('#dopsTx [data-ep="'+ep.n+'"]');
+    if (tx){
+      var btn = document.createElement('button');
+      btn.className = 'txbtn'; btn.type = 'button';
+      btn.textContent = 'Read transcript';
+      btn.setAttribute('aria-expanded','false');
+      el.querySelector('.row').appendChild(btn);
+      var pane = document.createElement('div');
+      pane.className = 'tx'; pane.innerHTML = tx.innerHTML;
+      el.querySelector('.row').parentNode.appendChild(pane);
+      btn.addEventListener('click', function(){
+        var open = el.classList.toggle('reading');
+        btn.textContent = open ? 'Hide transcript' : 'Read transcript';
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+    cards[i] = el;
+    (ep.stage === "The Spark" ? spark : click).appendChild(el);
+    var hit = el.querySelector(".playhit");
+    if (hit) hit.addEventListener("click", function(){ toggle(i); });
+  });
+
+  /* ---------------- player ---------------- */
+  var audio = new Audio();
+  audio.preload = "none";
+  var bar   = document.getElementById("dopsBar"),
+      icon  = document.getElementById("dopsIcon"),
+      seek  = document.getElementById("dopsSeek"),
+      now   = document.getElementById("dopsNow"),
+      len   = document.getElementById("dopsLen"),
+      note  = document.getElementById("dopsNote"),
+      btn   = document.getElementById("dopsPlay"),
+      next  = document.getElementById("dopsNext"),
+      back  = document.getElementById("dopsBack"),
+      cur   = -1, dragging = false;
+
+  var PLAY  = '<path d="M8 5v14l11-7z"/>';
+  var PAUSE = '<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>';
+
+  function time(t){
+    if (!isFinite(t)) return "0:00";
+    var m = Math.floor(t/60), s = Math.floor(t%60);
+    return m + ":" + (s<10 ? "0"+s : s);
+  }
+
+  function paint(){
+    cards.forEach(function(c, i){
+      c.classList.toggle("is-current", i === cur);
+      c.classList.toggle("is-playing", i === cur && !audio.paused);
+    });
+    icon.innerHTML = audio.paused ? PLAY : PAUSE;
+    btn.setAttribute("aria-label", audio.paused ? "Play" : "Pause");
+  }
+
+  function load(i){
+    var ep = EPISODES[i], s = scheme(ep);
+    cur = i;
+    bar.classList.add("up");
+    bar.classList.remove("err");
+    document.getElementById("dopsArt").innerHTML = artSVG(ep, true) + '<b style="color:'+s.fg+'">'+ep.n+'</b>';
+    document.getElementById("dopsTitle").textContent = ep.title;
+    document.getElementById("dopsStage").textContent = "Episode " + ep.n + " of 10, " + ep.stage;
+    audio.src = ep.audio;
+    seek.value = 0; now.textContent = "0:00"; len.textContent = "0:00";
+    next.disabled = !EPISODES.slice(i+1).some(function(e){ return e.ready; });
+  }
+
+  function toggle(i){
+    if (i !== cur) { load(i); audio.play().catch(function(){}); }
+    else if (audio.paused) { audio.play().catch(function(){}); }
+    else { audio.pause(); }
+    paint();
+  }
+
+  btn.addEventListener("click", function(){ toggle(cur < 0 ? 0 : cur); });
+  back.addEventListener("click", function(){ audio.currentTime = Math.max(0, audio.currentTime - 15); });
+  next.addEventListener("click", function(){
+    for (var i = cur + 1; i < EPISODES.length; i++){ if (EPISODES[i].ready) return toggle(i); }
+  });
+  document.getElementById("dopsStart").addEventListener("click", function(){ toggle(0); });
+
+  audio.addEventListener("play", paint);
+  audio.addEventListener("pause", paint);
+  audio.addEventListener("ended", function(){ paint(); next.click(); });
+  audio.addEventListener("loadedmetadata", function(){ len.textContent = time(audio.duration); });
+  audio.addEventListener("timeupdate", function(){
+    if (dragging || !isFinite(audio.duration)) return;
+    seek.value = Math.round((audio.currentTime / audio.duration) * 1000);
+    now.textContent = time(audio.currentTime);
+  });
+  audio.addEventListener("error", function(){
+    if (!audio.src) return;
+    bar.classList.add("err");
+    note.textContent = "The audio file for this episode is not on the site yet. Drop it in as " +
+      EPISODES[cur].audio + " and it plays.";
+    paint();
+  });
+
+  seek.addEventListener("input", function(){
+    dragging = true;
+    if (isFinite(audio.duration)) now.textContent = time((seek.value/1000) * audio.duration);
+  });
+  seek.addEventListener("change", function(){
+    if (isFinite(audio.duration)) audio.currentTime = (seek.value/1000) * audio.duration;
+    dragging = false;
+  });
+
+
+  /* stage recap videos: one thing plays at a time, and say so if a file is missing */
+  var vids = Array.prototype.slice.call(document.querySelectorAll('.dops .cap video'));
+  vids.forEach(function(v){
+    v.addEventListener('error', function(){ v.parentNode.parentNode.parentNode.classList.add('none'); });
+    v.addEventListener('play', function(){
+      audio.pause();
+      vids.forEach(function(o){ if (o !== v) o.pause(); });
+    });
+  });
+  audio.addEventListener('play', function(){ vids.forEach(function(v){ v.pause(); }); });
+
+  document.getElementById("dopsClose").addEventListener("click", function(){
+    audio.pause();
+    audio.removeAttribute("src");
+    bar.classList.remove("up","err");
+    cur = -1;
+    cards.forEach(function(c){ c.classList.remove("is-current","is-playing"); });
+  });
+
+  document.addEventListener("keydown", function(e){
+    if (e.code === "Space" && cur >= 0 && e.target === document.body){ e.preventDefault(); toggle(cur); }
+  });
+})();
+</script>
+</body>
+</html>
